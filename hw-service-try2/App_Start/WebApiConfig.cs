@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Dependencies;
@@ -16,6 +17,13 @@ namespace hw_service_try2
         public static void Register(HttpConfiguration config)
         {
             // Конфигурация и службы веб-API
+
+            // enable logging
+            NLog.LogManager.EnableLogging();
+            
+            // json formatter conf
+            config.Formatters.JsonFormatter.SupportedMediaTypes
+                .Add(new MediaTypeHeaderValue("text/html"));
 
             // Autofac DI
             var builder = new ContainerBuilder();

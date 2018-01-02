@@ -1,0 +1,52 @@
+2018-01-02 22:40:28.7576|ERROR|hw_service_try2.Dal.DbCardRepository|System.Data.SqlClient.SqlException (0x80131904): Недопустимое имя столбца "Осёл".
+Недопустимое имя столбца "Donkey".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbCardRepository.ExecuteNonQuery(String commandText) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 36
+   в hw_service_try2.Dal.DbCardRepository.Add(Card card) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 48
+ClientConnectionId:2065acbe-778f-4dba-b3d1-d95e29decdcd
+Error Number: 207, State: 1, Class: 16
+2018-01-02 22:43:20.0889|ERROR|hw_service_try2.Dal.DbCardRepository|System.Data.SqlClient.SqlException (0x80131904): Недопустимое имя столбца "Осёл".
+Недопустимое имя столбца "Donkey".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbCardRepository.ExecuteNonQuery(String commandText) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 36
+   в hw_service_try2.Dal.DbCardRepository.Add(Card card) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 48
+ClientConnectionId:54296f3a-07a8-4c34-809d-da215ffe8677
+Error Number: 207, State: 1, Class: 16
+2018-01-02 22:48:53.1461|ERROR|hw_service_try2.Dal.DbCardRepository|System.Data.SqlClient.SqlException (0x80131904): Недопустимое имя столбца "Осёл".
+Недопустимое имя столбца "Donkey".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbCardRepository.ExecuteNonQuery(String commandText) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 36
+   в hw_service_try2.Dal.DbCardRepository.Add(Card card) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 48
+ClientConnectionId:7e29216b-25b1-40da-b771-a12fc591021e
+Error Number: 207, State: 1, Class: 16
+2018-01-02 22:57:04.2604|ERROR|hw_service_try2.Dal.DbCardRepository|System.Data.SqlClient.SqlException (0x80131904): Недопустимое имя столбца "Осёл".
+Недопустимое имя столбца "Donkey".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbCardRepository.ExecuteNonQuery(String commandText) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 36
+   в hw_service_try2.Dal.DbCardRepository.Add(Card card) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 48
+ClientConnectionId:45ec18ea-9c1a-4a7f-9d2d-7a1054ebb437
+Error Number: 207, State: 1, Class: 16
