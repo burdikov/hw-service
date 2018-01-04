@@ -1,4 +1,5 @@
-﻿using hw_service_try2.Dal.Interfaces;
+﻿using hw_service_try2.Bll.Interfaces;
+using hw_service_try2.Dal.Interfaces;
 using hw_service_try2.Models;
 using NLog;
 using System;
@@ -12,36 +13,44 @@ namespace hw_service_try2.Controllers
 {
     public class CardsController : ApiController
     {
-        private ICardRepository repository;
+        private ICardBusinessLayer bll;
         private Logger logger = LogManager.GetCurrentClassLogger();
 
-        public CardsController(ICardRepository cardRepository)
+        public CardsController(ICardBusinessLayer bll)
         {
-            this.repository = cardRepository;
+            this.bll = bll;
         }
 
         [HttpGet]
-        public Card Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return repository.Get(id) ?? throw new HttpResponseException(HttpStatusCode.NotFound);
+            var card = bll.Get(id);
+            if (card != null) return Ok(card);
+            else return NotFound();
         }
 
         [HttpGet]
-        public IEnumerable<Card> GetAll()
+        public IHttpActionResult GetAll()
         {
-            return repository.GetAll(); 
+            var list = bll.GetAll();
+            if (list != null) return Ok(list);
+            else return NotFound();
         }
 
         [HttpPost]
-        public void Post([FromBody] Card card)
+        public IHttpActionResult Post(string rus, string eng, int? groupId = default)
         {
-            repository.Add(card);
+            var card = bll.Add(rus,eng,groupId);
+
+            if (card != null) return Created($"/api/cards/{card.ID}", card);
+            else return BadRequest();
         }
 
-        [HttpGet]
-        public void Delete(int id)
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
         {
-            repository.Delete(id);
+            bll.Delete(id);
+            return Ok();
         }
     }
 }

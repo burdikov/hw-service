@@ -7,6 +7,8 @@ using System.Web.Http;
 using System.Web.Http.Dependencies;
 using Autofac;
 using Autofac.Integration.WebApi;
+using hw_service_try2.Bll;
+using hw_service_try2.Bll.Interfaces;
 using hw_service_try2.Dal;
 using hw_service_try2.Dal.Interfaces;
 
@@ -29,6 +31,9 @@ namespace hw_service_try2
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<DbCardRepository>().As<ICardRepository>();
+            builder.RegisterType<CardBusinessLayer>().As<ICardBusinessLayer>();
+            builder.RegisterType<DbGroupRepository>().As<IGroupRepository>();
+            builder.RegisterType<GroupBusinessLayer>().As<IGroupBusinessLayer>();
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 

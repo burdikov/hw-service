@@ -50,3 +50,107 @@ Error Number: 207, State: 1, Class: 16
    в hw_service_try2.Dal.DbCardRepository.Add(Card card) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 48
 ClientConnectionId:45ec18ea-9c1a-4a7f-9d2d-7a1054ebb437
 Error Number: 207, State: 1, Class: 16
+2018-01-03 22:57:00.7028|ERROR|hw_service_try2.Dal.DbGroupRepository|System.Data.SqlClient.SqlException (0x80131904): Неправильный синтаксис около ключевого слова "Group".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   в System.Data.SqlClient.SqlDataReader.get_MetaData()
+   в System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   в System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   в System.Data.SqlClient.SqlCommand.ExecuteReader()
+   в hw_service_try2.Dal.DbGroupRepository.GetAll() в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbGroupRepository.cs:строка 116
+ClientConnectionId:1e5c882f-d0f0-44a3-b7fd-018e04271cef
+Error Number: 156, State: 1, Class: 15
+2018-01-03 23:00:17.5331|ERROR|hw_service_try2.Dal.DbCardRepository|System.Data.SqlClient.SqlException (0x80131904): Конфликт инструкции INSERT с ограничением FOREIGN KEY "FK_Card_Group". Конфликт произошел в базе данных "Cards", таблица "dbo.Group", column 'id'.
+Выполнение данной инструкции было прервано.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbCardRepository.ExecuteNonQuery(String commandText) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 37
+   в hw_service_try2.Dal.DbCardRepository.Add(Card card) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 56
+ClientConnectionId:ef4680f9-7cdb-415b-af14-0f315cf75476
+Error Number: 547, State: 0, Class: 16
+2018-01-03 23:04:12.9330|ERROR|hw_service_try2.Dal.DbCardRepository|System.Data.SqlClient.SqlException (0x80131904): Конфликт инструкции INSERT с ограничением FOREIGN KEY "FK_Card_Group". Конфликт произошел в базе данных "Cards", таблица "dbo.Group", column 'id'.
+Выполнение данной инструкции было прервано.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbCardRepository.ExecuteNonQuery(String commandText) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 37
+   в hw_service_try2.Dal.DbCardRepository.Add(Card card) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 56
+ClientConnectionId:d50363f6-d2bc-451e-b039-509669b1d275
+Error Number: 547, State: 0, Class: 16
+2018-01-04 01:11:33.8941|ERROR|hw_service_try2.Dal.DbGroupRepository|System.Data.SqlClient.SqlException (0x80131904): Неправильный синтаксис около ключевого слова "Group".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbGroupRepository.ExecuteNonQuery(String commandText) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbGroupRepository.cs:строка 36
+   в hw_service_try2.Dal.DbGroupRepository.Delete(Int32 id) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbGroupRepository.cs:строка 61
+ClientConnectionId:cfebd133-9a53-433d-ac7e-f930fa3af1cd
+Error Number: 156, State: 1, Class: 15
+2018-01-04 01:12:08.1537|ERROR|hw_service_try2.Dal.DbGroupRepository|System.Data.SqlClient.SqlException (0x80131904): Конфликт инструкции DELETE с ограничением REFERENCE "FK_Card_Group". Конфликт произошел в базе данных "Cards", таблица "dbo.Card", column 'groupid'.
+Выполнение данной инструкции было прервано.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbGroupRepository.ExecuteNonQuery(String commandText) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbGroupRepository.cs:строка 36
+   в hw_service_try2.Dal.DbGroupRepository.Delete(Int32 id) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbGroupRepository.cs:строка 61
+ClientConnectionId:0b0d7ad5-2415-4a44-b23c-46311f9d1868
+Error Number: 547, State: 0, Class: 16
+2018-01-04 02:43:32.6782|ERROR|hw_service_try2.Dal.DbCardRepository|System.Data.SqlClient.SqlException (0x80131904): Неправильный синтаксис около конструкции "null".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbCardRepository.Create(String rus, String eng, Nullable`1 groupId) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 57
+ClientConnectionId:50c48a48-8dab-4709-80e1-5a508aedfb2e
+Error Number: 102, State: 1, Class: 15
+2018-01-04 02:57:29.3813|ERROR|hw_service_try2.Dal.DbCardRepository|System.Data.SqlClient.SqlException (0x80131904): Не удалось найти хранимую процедуру "SCOPE_IDENTITY".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbCardRepository.Create(String rus, String eng, Nullable`1 groupId) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 70
+ClientConnectionId:b6ef6ed1-76cc-495d-8d1c-45ab2426bbe2
+Error Number: 2812, State: 62, Class: 16
+2018-01-04 03:08:00.6080|ERROR|hw_service_try2.Dal.DbCardRepository|System.Data.SqlClient.SqlException (0x80131904): Не удалось найти хранимую процедуру "SCOPE_IDENTITY".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в hw_service_try2.Dal.DbCardRepository.Create(String rus, String eng, Nullable`1 groupId) в C:\Users\Леонид\source\repos\hw-service-try2\hw-service-try2\Dal\DbCardRepository.cs:строка 70
+ClientConnectionId:8d486671-16f9-4ca5-87c4-63a5d9d6baef
+Error Number: 2812, State: 62, Class: 16

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace hw_service_try2.Bll.Interfaces
 {
-    public interface ICardBusinessLayer
+    public interface IGroupBusinessLayer
     {
-        Card Add(string rus, string eng, int? groupId);
+        void Add(Group group);
+        void UpdateName(int id, string newName);
         void Delete(int id);
-        void Update(int id, Card card);
-        Card Get(int id);
-        IEnumerable<Card> GetAll();
+        IEnumerable<Card> Get(int groupId);
+        IEnumerable<Group> GetAll();
     }
 }

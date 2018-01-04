@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace hw_service_try2.Dal.Interfaces
 {
-    public interface ICardRepository
+    public interface IGroupRepository
     {
-        Card Create(string rus, string eng, int? groupId);
-        Card Read(int id);
-        void Update(int id, Card card);
+        void Add(Group group);
+        void UpdateName(int id, string newName);
         void Delete(int id);
-        IEnumerable<Card> ReadAll();
+        IEnumerable<Card> Get(int groupId);
+        IEnumerable<Group> GetAll();
     }
 }

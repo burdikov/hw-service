@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Web;
-using hw_service_try2.Dal.Interfaces;
+﻿using hw_service_try2.Dal.Interfaces;
 using hw_service_try2.Models;
 using NLog;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
 
 namespace hw_service_try2.Dal
 {
-    public class DbCardRepository : ICardRepository
+    public class DbGroupRepository : IGroupRepository
     {
         private string ConnectionString { get; }
         private Logger logger = LogManager.GetCurrentClassLogger();
 
-        public DbCardRepository()
+        public DbGroupRepository()
         {
             ConnectionString = ConfigurationManager.ConnectionStrings["mssql"].ConnectionString;
         }
 
-        public DbCardRepository(string connectionString)
+        public DbGroupRepository(string connectionString)
         {
             ConnectionString = connectionString;
         }
@@ -39,28 +37,13 @@ namespace hw_service_try2.Dal
             }
         }
 
-        /// <summary>
-        /// Insert a new record into Card table.
-        /// </summary>
-        public Card Create(string rus, string eng, int? groupId)
+        public void Add(Group group)
         {
             try
             {
-                using (var conn = new SqlConnection(ConnectionString))
-                using (var cmd = conn.CreateCommand())
-                {
-                    conn.Open();
+                var cmd = $"insert into Group values ('{group.Name}')";
 
-                    cmd.CommandText = $"insert into [Card] " +
-                        $"values ('{rus}','{eng}'," +
-                        $"{ groupId?.ToString() ?? "null" });" +
-                        $"select SCOPE_IDENTITY()";
-
-                    var s = cmd.ExecuteScalar().ToString();
-                    int.TryParse(s, out int id);
-                    
-                    return new Card() { ID = id, Rus = rus, Eng = eng, GroupID = groupId };
-                }
+                ExecuteNonQuery(cmd);
             }
             catch (SqlException e)
             {
@@ -73,7 +56,9 @@ namespace hw_service_try2.Dal
         {
             try
             {
-                ExecuteNonQuery("delete from [dbo].[Card] where id = " + id);
+                var cmd = $"delete from [Group] where id = {id}";
+
+                ExecuteNonQuery(cmd);
             }
             catch (SqlException e)
             {
@@ -82,44 +67,14 @@ namespace hw_service_try2.Dal
             }
         }
 
-        public Card Read(int id)
+        public IEnumerable<Card> Get(int groupId)
         {
             try
             {
                 using (var conn = new SqlConnection(ConnectionString))
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = $"select * from [dbo].[Card] where id = {id}";
-
-                    conn.Open();
-                    var reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
-                        return new Card()
-                        {
-                            ID = (int)reader[0],
-                            Rus = (string)reader[1],
-                            Eng = (string)reader[2],
-                            GroupID = reader.IsDBNull(3) ? null : (int?)reader[3]
-                        };
-                    else return null;
-                }
-            }
-            catch (SqlException e)
-            {
-                logger.Error(e);
-                throw;
-            }
-        }
-
-        public IEnumerable<Card> ReadAll()
-        {
-            try
-            {
-                using (var conn = new SqlConnection(ConnectionString))
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = "select * from [dbo].[Card]";
+                    cmd.CommandText = $"select * from Card where groupid = {groupId}";
 
                     conn.Open();
                     var reader = cmd.ExecuteReader();
@@ -148,15 +103,45 @@ namespace hw_service_try2.Dal
             }
         }
 
-        public void Update(int id, Card card)
+        public IEnumerable<Group> GetAll()
         {
             try
             {
-                var cmd = $"update [Card] " +
-                    $"set rus = '{card.Rus}', eng = '{card.Eng}', " +
-                    $"groupid = {card.GroupID?.ToString() ?? "null"} " +
-                    $"where id = {id}";
+                using (var conn = new SqlConnection(ConnectionString))
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "select * from [Group]";
 
+                    conn.Open();
+                    var reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        var list = new List<Group>();
+                        while (reader.Read())
+                        {
+                            list.Add(new Group()
+                            {
+                                ID = reader.GetInt32(0),
+                                Name = reader.GetString(1)
+                            });
+                        }
+                        return list;
+                    }
+                    else return null;
+                }
+            }
+            catch (SqlException e)
+            {
+                logger.Error(e);
+                throw;
+            }
+        }
+
+        public void UpdateName(int id, string newName)
+        {
+            try
+            {
+                var cmd = $"update [Group] set name = '{newName}' where id = {id}";
                 ExecuteNonQuery(cmd);
             }
             catch (SqlException e)

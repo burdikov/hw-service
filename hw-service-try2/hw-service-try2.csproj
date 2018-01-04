@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +43,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -94,19 +96,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Bll\CardBusinessLayer.cs" />
+    <Compile Include="Bll\GroupBusinessLayer.cs" />
     <Compile Include="Bll\Interfaces\ICardBusinessLayer.cs" />
+    <Compile Include="Bll\Interfaces\IGroupBusinessLayer.cs" />
     <Compile Include="Controllers\CardsController.cs" />
+    <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Dal\DbCardRepository.cs" />
+    <Compile Include="Dal\DbGroupRepository.cs" />
     <Compile Include="Dal\Interfaces\ICardRepository.cs" />
+    <Compile Include="Dal\Interfaces\IGroupRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
