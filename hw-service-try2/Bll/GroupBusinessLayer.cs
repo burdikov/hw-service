@@ -17,26 +17,30 @@ namespace hw_service_try2.Bll
             this.repository = repository;
         }
 
-        public void Add(Group group)
+        public Group Add(string name)
         {
-            if (group == null) throw new ArgumentNullException();
-            if (group.Name.Length > 50 || group.Name.Length == 0)
+            if (name == null) throw new ArgumentNullException();
+            if (name.Length > 50 || name.Length == 0)
                 throw new ArgumentException("Invalid name length.");
-            repository.Add(group);
+
+            return repository.Create(name);
         }
 
-        public void Delete(int id) => repository.Delete(id);
+        public bool Delete(int id) => repository.Delete(id) == 1 ? true : false;
 
-        public IEnumerable<Card> Get(int groupId) => repository.Get(groupId);
+        public Group Get(int groupId) => repository.Read(groupId);
 
-        public IEnumerable<Group> GetAll() => repository.GetAll();
+        public IEnumerable<Group> GetAll() => repository.ReadAll();
 
-        public void UpdateName(int id, string newName)
+        public IEnumerable<int> List() => repository.List();
+
+        public bool Update(int id, Group group)
         {
-            if (newName == null) throw new ArgumentNullException();
-            if (newName.Length == 0 || newName.Length > 50)
+            if (group == null) throw new ArgumentNullException();
+            if (group.Name.Length == 0 || group.Name.Length > 50)
                 throw new ArgumentException("Invalid name length.");
-            repository.UpdateName(id, newName);
+
+            return repository.Update(id, group) == 1 ? true : false;
         }
     }
 }

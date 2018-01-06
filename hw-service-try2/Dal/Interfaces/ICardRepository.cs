@@ -11,8 +11,11 @@ namespace hw_service_try2.Dal.Interfaces
     {
         Card Create(string rus, string eng, int? groupId);
         Card Read(int id);
-        void Update(int id, Card card);
-        void Delete(int id);
+        IEnumerable<int> List();
+        IEnumerable<Card> Read(int[] ids);
+        IEnumerable<Card> ReadGroup(int groupId);
         IEnumerable<Card> ReadAll();
+        int Update(int id, Card card);
+        int Delete(int id);
     }
 }

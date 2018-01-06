@@ -10,9 +10,12 @@ namespace hw_service_try2.Bll.Interfaces
     public interface ICardBusinessLayer
     {
         Card Add(string rus, string eng, int? groupId);
-        void Delete(int id);
-        void Update(int id, Card card);
+        bool Delete(int id);
+        bool Update(int id, Card card);
         Card Get(int id);
+        IEnumerable<int> List();
+        IEnumerable<Card> Get(int[] ids);
         IEnumerable<Card> GetAll();
+        IEnumerable<Card> GetGroup(int groupId);
     }
 }

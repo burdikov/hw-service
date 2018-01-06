@@ -27,6 +27,7 @@ namespace hw_service_try2.Controllers
         }
 
         [HttpGet]
+        [ActionName("all")]
         public IHttpActionResult GetAll()
         {
             var l = bll.GetAll();
@@ -34,25 +35,49 @@ namespace hw_service_try2.Controllers
             else return Ok(l);
         }
 
-        [HttpPost]
-        public IHttpActionResult Add([FromBody] Group g)
+        [HttpGet]
+        [ActionName("list")]
+        public IHttpActionResult List()
         {
-            bll.Add(g);
-            return Ok();
+            var l = bll.List();
+            if (l != null) return Ok(l);
+            else return NotFound();
         }
 
         [HttpPost]
-        public IHttpActionResult UpdateName(int id, string newName)
+        public IHttpActionResult Post(string name)
         {
-            bll.UpdateName(id, newName);
-            return Ok();
+            try
+            {
+                var g = bll.Add(name);
+                if (g != null) return Created($"api/groups/{g.ID}",g);
+                else return NotFound();
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody] Group group)
+        {
+            try
+            {
+                if (bll.Update(id, group)) return Ok();
+                else return NotFound();
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            bll.Delete(id);
-            return Ok();
+            if (bll.Delete(id)) return Ok();
+            else return NotFound();
         }
     }
 }

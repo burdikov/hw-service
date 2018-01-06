@@ -9,10 +9,11 @@ namespace hw_service_try2.Dal.Interfaces
 {
     public interface IGroupRepository
     {
-        void Add(Group group);
-        void UpdateName(int id, string newName);
-        void Delete(int id);
-        IEnumerable<Card> Get(int groupId);
-        IEnumerable<Group> GetAll();
+        Group Create(string name);
+        Group Read(int groupId);
+        IEnumerable<Group> ReadAll();
+        IEnumerable<int> List();
+        int Update(int id, Group group);
+        int Delete(int id);
     }
 }

@@ -10,145 +10,120 @@ using System.Web;
 
 namespace hw_service_try2.Dal
 {
-    public class DbGroupRepository : IGroupRepository
+    public class DbGroupRepository : SqlDbRepository, IGroupRepository
     {
-        private string ConnectionString { get; }
         private Logger logger = LogManager.GetCurrentClassLogger();
 
-        public DbGroupRepository()
+        public DbGroupRepository() : base(ConfigurationManager.ConnectionStrings["mssql"].ConnectionString)
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["mssql"].ConnectionString;
         }
 
-        public DbGroupRepository(string connectionString)
+        public DbGroupRepository(string connectionString) : base(connectionString)
         {
-            ConnectionString = connectionString;
         }
 
-        private void ExecuteNonQuery(string commandText)
-        {
-            using (var conn = new SqlConnection(ConnectionString))
-            using (var cmd = conn.CreateCommand())
-            {
-                cmd.CommandText = commandText;
-
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public void Add(Group group)
+        public Group Create(string name)
         {
             try
             {
-                var cmd = $"insert into Group values ('{group.Name}')";
+                var commandText = $"insert into [Group] values ('{name}'); select scope_identity()";
+                var s = ExecuteScalar(commandText).ToString();
+                int.TryParse(s, out int id);
 
-                ExecuteNonQuery(cmd);
+                return new Group() { ID = id, Name = name };
             }
             catch (SqlException e)
             {
                 logger.Error(e);
-                throw;
+                return null;
             }
         }
 
-        public void Delete(int id)
+        public int Delete(int id)
         {
             try
             {
                 var cmd = $"delete from [Group] where id = {id}";
 
-                ExecuteNonQuery(cmd);
+                return ExecuteNonQuery(cmd);
             }
             catch (SqlException e)
             {
                 logger.Error(e);
-                throw;
+                return 0;
             }
         }
 
-        public IEnumerable<Card> Get(int groupId)
+        public Group Read(int groupId)
         {
             try
             {
-                using (var conn = new SqlConnection(ConnectionString))
-                using (var cmd = conn.CreateCommand())
+                var commandText = $"select * from [Group] where id = {groupId}";
+
+                return ConvertToGroups(ExecuteSingleSetReader(commandText)).ElementAtOrDefault(0);
+            }
+            catch (SqlException e)
+            {
+                logger.Error(e);
+                return null;
+            }
+        }
+
+        public IEnumerable<Group> ReadAll()
+        {
+            try
+            {
+                var commandText = "select * from [Group]";
+                return ConvertToGroups(ExecuteSingleSetReader(commandText));
+            }
+            catch (SqlException e)
+            {
+                logger.Error(e);
+                return null;
+            }
+        }
+
+        public int Update(int id, Group group)
+        {
+            try
+            {
+                var cmd = $"update [Group] set name = '{group.Name}' where id = {id}";
+                return ExecuteNonQuery(cmd);
+            }
+            catch (SqlException e)
+            {
+                logger.Error(e);
+                return 0;
+            }
+        }
+
+        public IEnumerable<int> List()
+        {
+            try
+            {
+                // list of rows (object[] represents row) with single value
+                List<object[]> idList = ExecuteSingleSetReader("select [id] from [group]");
+                return idList.Select(x => (int)x[0]).ToArray();
+            }
+            catch (SqlException e)
+            {
+                logger.Error(e);
+                return null;
+            }
+        }
+
+        private List<Group> ConvertToGroups(List<object[]> list)
+        {
+            var result = new List<Group>();
+            for (int i = 0; i < list.Count(); i++)
+            {
+                result.Add(new Group()
                 {
-                    cmd.CommandText = $"select * from Card where groupid = {groupId}";
-
-                    conn.Open();
-                    var reader = cmd.ExecuteReader();
-                    if (reader.HasRows)
-                    {
-                        List<Card> list = new List<Card>();
-                        while (reader.Read())
-                        {
-                            list.Add(new Card()
-                            {
-                                ID = reader.GetInt32(0),
-                                Rus = reader.GetString(1),
-                                Eng = reader.GetString(2),
-                                GroupID = reader.IsDBNull(3) ? null : (int?)reader[3]
-                            });
-                        }
-                        return list;
-                    }
-                    else return null;
-                }
+                    ID = (int)(list[i][0]),
+                    Name = (string)(list[i][1])
+                });
             }
-            catch (SqlException e)
-            {
-                logger.Error(e);
-                throw;
-            }
-        }
-
-        public IEnumerable<Group> GetAll()
-        {
-            try
-            {
-                using (var conn = new SqlConnection(ConnectionString))
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = "select * from [Group]";
-
-                    conn.Open();
-                    var reader = cmd.ExecuteReader();
-                    if (reader.HasRows)
-                    {
-                        var list = new List<Group>();
-                        while (reader.Read())
-                        {
-                            list.Add(new Group()
-                            {
-                                ID = reader.GetInt32(0),
-                                Name = reader.GetString(1)
-                            });
-                        }
-                        return list;
-                    }
-                    else return null;
-                }
-            }
-            catch (SqlException e)
-            {
-                logger.Error(e);
-                throw;
-            }
-        }
-
-        public void UpdateName(int id, string newName)
-        {
-            try
-            {
-                var cmd = $"update [Group] set name = '{newName}' where id = {id}";
-                ExecuteNonQuery(cmd);
-            }
-            catch (SqlException e)
-            {
-                logger.Error(e);
-                throw;
-            }
+            return result;
         }
     }
 }

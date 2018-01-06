@@ -9,10 +9,11 @@ namespace hw_service_try2.Bll.Interfaces
 {
     public interface IGroupBusinessLayer
     {
-        void Add(Group group);
-        void UpdateName(int id, string newName);
-        void Delete(int id);
-        IEnumerable<Card> Get(int groupId);
+        Group Add(string name);
+        bool Update(int id, Group group);
+        bool Delete(int id);
+        Group Get(int groupId);
+        IEnumerable<int> List();
         IEnumerable<Group> GetAll();
     }
 }

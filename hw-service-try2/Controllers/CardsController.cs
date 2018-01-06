@@ -4,6 +4,7 @@ using hw_service_try2.Models;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,6 +23,7 @@ namespace hw_service_try2.Controllers
         }
 
         [HttpGet]
+        [ActionName("get")]
         public IHttpActionResult Get(int id)
         {
             var card = bll.Get(id);
@@ -30,6 +32,17 @@ namespace hw_service_try2.Controllers
         }
 
         [HttpGet]
+        [ActionName("group")]
+        public IHttpActionResult GetGroup(int id)
+        {
+            var group = bll.GetGroup(id);
+
+            if (group != null) return Ok(group);
+            else return NotFound();
+        }
+
+        [HttpGet]
+        [ActionName("all")]
         public IHttpActionResult GetAll()
         {
             var list = bll.GetAll();
@@ -37,20 +50,55 @@ namespace hw_service_try2.Controllers
             else return NotFound();
         }
 
+        [HttpGet]
+        [ActionName("list")]
+        public IHttpActionResult List()
+        {
+            var list = bll.List();
+            if (list != null) return Ok(list);
+            else return NotFound();
+        }
+
         [HttpPost]
         public IHttpActionResult Post(string rus, string eng, int? groupId = default)
         {
-            var card = bll.Add(rus,eng,groupId);
+            try
+            {
+                var card = bll.Add(rus, eng, groupId);
 
-            if (card != null) return Created($"/api/cards/{card.ID}", card);
-            else return BadRequest();
+                if (card != null) return Created($"/api/cards/{card.ID}", card);
+                else return NotFound();
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            bll.Delete(id);
-            return Ok();
+            if (bll.Delete(id))
+                return Ok();
+            else
+                return NotFound();
         }
+
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody] Card card)
+        {
+            try
+            {
+                if (bll.Update(id, card))
+                    return Ok();
+                else
+                    return NotFound();
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }

@@ -34,6 +34,8 @@ namespace hw_service_try2
             builder.RegisterType<CardBusinessLayer>().As<ICardBusinessLayer>();
             builder.RegisterType<DbGroupRepository>().As<IGroupRepository>();
             builder.RegisterType<GroupBusinessLayer>().As<IGroupBusinessLayer>();
+            builder.RegisterType<DbCardTranslator>().As<ICardTranslator>();
+            builder.RegisterType<CardTester>().As<ICardTester>();
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
@@ -41,8 +43,13 @@ namespace hw_service_try2
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "TranslateApi",
+                routeTemplate: "api/translate/{action}/{word}",
+                defaults: new { controller = "translate" }
+            );
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }

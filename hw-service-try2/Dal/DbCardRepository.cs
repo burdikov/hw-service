@@ -12,33 +12,18 @@ using NLog;
 
 namespace hw_service_try2.Dal
 {
-    public class DbCardRepository : ICardRepository
+    public class DbCardRepository : SqlDbRepository, ICardRepository
     {
-        private string ConnectionString { get; }
         private Logger logger = LogManager.GetCurrentClassLogger();
 
-        public DbCardRepository()
+        public DbCardRepository() : base(ConfigurationManager.ConnectionStrings["mssql"].ConnectionString)
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["mssql"].ConnectionString;
         }
 
-        public DbCardRepository(string connectionString)
+        public DbCardRepository(string connectionString) : base (connectionString)
         {
-            ConnectionString = connectionString;
         }
-
-        private void ExecuteNonQuery(string commandText)
-        {
-            using (var conn = new SqlConnection(ConnectionString))
-            using (var cmd = conn.CreateCommand())
-            {
-                cmd.CommandText = commandText;
-
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
-
+        
         /// <summary>
         /// Insert a new record into Card table.
         /// </summary>
@@ -46,39 +31,33 @@ namespace hw_service_try2.Dal
         {
             try
             {
-                using (var conn = new SqlConnection(ConnectionString))
-                using (var cmd = conn.CreateCommand())
-                {
-                    conn.Open();
-
-                    cmd.CommandText = $"insert into [Card] " +
+                var commandText = $"insert into [Card] " +
                         $"values ('{rus}','{eng}'," +
                         $"{ groupId?.ToString() ?? "null" });" +
                         $"select SCOPE_IDENTITY()";
 
-                    var s = cmd.ExecuteScalar().ToString();
-                    int.TryParse(s, out int id);
-                    
-                    return new Card() { ID = id, Rus = rus, Eng = eng, GroupID = groupId };
-                }
+                var s = ExecuteScalar(commandText).ToString();
+                int.TryParse(s, out int id);
+
+                return new Card() { ID = id, Rus = rus, Eng = eng, GroupID = groupId };
             }
             catch (SqlException e)
             {
                 logger.Error(e);
-                throw;
+                return null;
             }
         }
 
-        public void Delete(int id)
+        public int Delete(int id)
         {
             try
             {
-                ExecuteNonQuery("delete from [dbo].[Card] where id = " + id);
+                return ExecuteNonQuery("delete from [dbo].[Card] where id = " + id);
             }
             catch (SqlException e)
             {
                 logger.Error(e);
-                throw;
+                return 0;
             }
         }
 
@@ -86,29 +65,16 @@ namespace hw_service_try2.Dal
         {
             try
             {
-                using (var conn = new SqlConnection(ConnectionString))
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = $"select * from [dbo].[Card] where id = {id}";
+                var commandText = $"select * from [dbo].[Card] where id = {id}";
 
-                    conn.Open();
-                    var reader = cmd.ExecuteReader();
+                List<object[]> list = ExecuteSingleSetReader(commandText);
 
-                    if (reader.Read())
-                        return new Card()
-                        {
-                            ID = (int)reader[0],
-                            Rus = (string)reader[1],
-                            Eng = (string)reader[2],
-                            GroupID = reader.IsDBNull(3) ? null : (int?)reader[3]
-                        };
-                    else return null;
-                }
+                return ConvertToCards(list).ElementAtOrDefault(0);
             }
             catch (SqlException e)
             {
                 logger.Error(e);
-                throw;
+                return null;
             }
         }
 
@@ -116,39 +82,19 @@ namespace hw_service_try2.Dal
         {
             try
             {
-                using (var conn = new SqlConnection(ConnectionString))
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = "select * from [dbo].[Card]";
+                var commandText = "select * from [Card]";
+                List<object[]> list = ExecuteSingleSetReader(commandText);
 
-                    conn.Open();
-                    var reader = cmd.ExecuteReader();
-                    if (reader.HasRows)
-                    {
-                        List<Card> list = new List<Card>();
-                        while (reader.Read())
-                        {
-                            list.Add(new Card()
-                            {
-                                ID = reader.GetInt32(0),
-                                Rus = reader.GetString(1),
-                                Eng = reader.GetString(2),
-                                GroupID = reader.IsDBNull(3) ? null : (int?)reader[3]
-                            });
-                        }
-                        return list;
-                    }
-                    else return null;
-                }
+                return ConvertToCards(list);
             }
             catch (SqlException e)
             {
                 logger.Error(e);
-                throw;
+                return null;
             }
         }
 
-        public void Update(int id, Card card)
+        public int Update(int id, Card card)
         {
             try
             {
@@ -157,12 +103,75 @@ namespace hw_service_try2.Dal
                     $"groupid = {card.GroupID?.ToString() ?? "null"} " +
                     $"where id = {id}";
 
-                ExecuteNonQuery(cmd);
+                return ExecuteNonQuery(cmd);
             }
             catch (SqlException e)
             {
                 logger.Error(e);
-                throw;
+                return 0;
+            }
+        }
+
+        public IEnumerable<Card> ReadGroup(int groupId)
+        {
+            try
+            {
+                var commandText = $"select * from [card] where [groupid] = {groupId}";
+
+                List<object[]> list = ExecuteSingleSetReader(commandText);
+
+                return ConvertToCards(list);
+            }
+            catch (SqlException e)
+            {
+                logger.Error(e);
+                return null;
+            }
+        }
+
+        private List<Card> ConvertToCards(List<object[]> list)
+        {
+            var result = new List<Card>();
+            for (int i = 0; i < list.Count(); i++)
+            {
+                result.Add(new Card()
+                {
+                    ID = (int)(list[i][0]),
+                    Rus = (string)(list[i][1]),
+                    Eng = (string)(list[i][2]),
+                    GroupID = (int?)(list[i][3])
+                });
+            }
+            return result;
+        }
+
+        public IEnumerable<int> List()
+        {
+            try
+            {
+                var cmd = "select [id] from [Card]";
+                var list = ExecuteSingleSetReader(cmd);
+                return list.Select(x => (int)x[0]).ToArray();
+            }
+            catch (SqlException e)
+            {
+                logger.Error(e);
+                return null;
+            }
+        }
+
+        public IEnumerable<Card> Read(int[] ids)
+        {
+            try
+            {
+                var cmd = $"select * from [card] where [id] in " +
+                    $"({ids.Select(x => x.ToString()).Aggregate((x, y) => x + ',' + y)})";
+                return ConvertToCards(ExecuteSingleSetReader(cmd));
+            }
+            catch (SqlException e)
+            {
+                logger.Error(e);
+                return null;
             }
         }
     }

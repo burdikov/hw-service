@@ -1,4 +1,5 @@
 ﻿using hw_service_try2.Bll.Interfaces;
+using hw_service_try2.Common;
 using hw_service_try2.Dal.Interfaces;
 using hw_service_try2.Models;
 using System;
@@ -16,12 +17,6 @@ namespace hw_service_try2.Bll
         public CardBusinessLayer(ICardRepository cardRepository)
         {
             repository = cardRepository;
-        }
-
-        private enum Lang
-        {
-            Russian,
-            English
         }
 
         private bool IsValidWord(string word, Lang lang)
@@ -46,27 +41,34 @@ namespace hw_service_try2.Bll
         public Card Add(string rus, string eng, int? groupId)
         {
             if (!IsValidWord(rus, Lang.Russian))
-                throw new ArgumentException("Field rus is not a valid russian word");
+                throw new ArgumentException("Field rus is not a valid russian word.");
             if (!IsValidWord(eng, Lang.English))
-                throw new ArgumentException("Field eng is not a valid english word");
+                throw new ArgumentException("Field eng is not a valid english word.");
 
             return repository.Create(rus,eng,groupId);
         }
 
-        public void Update(int id, Card card)
+        public bool Update(int id, Card card)
         {
+            if (card == null) throw new ArgumentNullException("card");
             if (!IsValidWord(card.Rus, Lang.Russian))
-                throw new ArgumentException("Field rus is not a valid russian word");
+                throw new ArgumentException("Field rus is not a valid russian word.");
             if (!IsValidWord(card.Eng, Lang.English))
-                throw new ArgumentException("Field eng is not a valid english word");
+                throw new ArgumentException("Field eng is not a valid english word.");
+            if (id != card.ID) throw new ArgumentException("Id of the card can not be changed.");
 
-            repository.Update(id, card);
+            if (repository.Update(id, card) == 1) return true; else return false;
         }
 
-        public void Delete(int id) => repository.Delete(id);
+        public bool Delete(int id) => repository.Delete(id) == 1 ? true : false;
 
         public Card Get(int id) => repository.Read(id);
 
+        public IEnumerable<Card> GetGroup(int groupId) => repository.ReadGroup(groupId);
         public IEnumerable<Card> GetAll() => repository.ReadAll();
+
+        public IEnumerable<int> List() => repository.List();
+
+        public IEnumerable<Card> Get(int[] ids) => repository.Read(ids);
     }
 }
