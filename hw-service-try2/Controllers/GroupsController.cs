@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Swashbuckle.Swagger.Annotations;
 
 namespace hw_service_try2.Controllers
 {
@@ -19,6 +20,9 @@ namespace hw_service_try2.Controllers
         }
 
         [HttpGet]
+        [ActionName("get")]
+        [SwaggerResponse(HttpStatusCode.OK,"Group by Id.",typeof(Group))]
+        [SwaggerResponse(HttpStatusCode.NotFound,"Group does not exist or DB is not accessible.")]
         public IHttpActionResult Get(int id)
         {
             var g = bll.Get(id);
@@ -28,30 +32,37 @@ namespace hw_service_try2.Controllers
 
         [HttpGet]
         [ActionName("all")]
+        [SwaggerResponse(HttpStatusCode.OK,"All groups.",typeof(List<Group>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError,"DB is not accessible.")]
         public IHttpActionResult GetAll()
         {
             var l = bll.GetAll();
-            if (l == null) return NotFound();
+            if (l == null) return InternalServerError();
             else return Ok(l);
         }
 
         [HttpGet]
         [ActionName("list")]
+        [SwaggerResponse(HttpStatusCode.OK,"List of group ids.", typeof(List<int>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "DB is not accessible.")]
         public IHttpActionResult List()
         {
             var l = bll.List();
             if (l != null) return Ok(l);
-            else return NotFound();
+            else return InternalServerError();
         }
 
         [HttpPost]
+        [SwaggerResponse(HttpStatusCode.Created,"Create group.",typeof(Group))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError,"DB is not accessible.")]
+        [SwaggerResponse(HttpStatusCode.BadRequest,"Invalid name for a group.")]
         public IHttpActionResult Post(string name)
         {
             try
             {
                 var g = bll.Add(name);
                 if (g != null) return Created($"api/groups/{g.ID}",g);
-                else return NotFound();
+                else return InternalServerError();
             }
             catch (ArgumentException e)
             {
@@ -60,6 +71,8 @@ namespace hw_service_try2.Controllers
         }
 
         [HttpPut]
+        [SwaggerResponse(HttpStatusCode.OK, "Update group.")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Group does not exist or DB is not accessible.")]
         public IHttpActionResult Put(int id, [FromBody] Group group)
         {
             try
@@ -74,6 +87,8 @@ namespace hw_service_try2.Controllers
         }
 
         [HttpDelete]
+        [SwaggerResponse(HttpStatusCode.OK, "Delete group.")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Group does not exist or DB is not accessible.")]
         public IHttpActionResult Delete(int id)
         {
             if (bll.Delete(id)) return Ok();

@@ -94,14 +94,14 @@ namespace hw_service_try2.Dal
             }
         }
 
-        public int Update(int id, Card card)
+        public int Update(Card card)
         {
             try
             {
                 var cmd = $"update [Card] " +
                     $"set rus = '{card.Rus}', eng = '{card.Eng}', " +
                     $"groupid = {card.GroupID?.ToString() ?? "null"} " +
-                    $"where id = {id}";
+                    $"where id = {card.ID}";
 
                 return ExecuteNonQuery(cmd);
             }

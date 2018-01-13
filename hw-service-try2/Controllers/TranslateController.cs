@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Swashbuckle.Swagger.Annotations;
 
 namespace hw_service_try2.Controllers
 {
@@ -17,16 +18,18 @@ namespace hw_service_try2.Controllers
         }
 
         [HttpGet]
-        [ActionName("ru-en")]
+        [SwaggerResponse(HttpStatusCode.OK,"Translates the word from russian to english using DB cards. Empty set if translation is not found.",typeof(List<string>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError,"DB is not accessible.")]
         public IHttpActionResult RuEn(string word)
         {
             var list = cardTranslator.Translate(word, Common.TranslateDirection.ToEnglish);
             if (list != null) return Ok(list);
-            else return NotFound();
+            else return InternalServerError();
         }
 
         [HttpGet]
-        [ActionName("en-ru")]
+        [SwaggerResponse(HttpStatusCode.OK,"Translates the word from russian to english using DB cards. Empty set if translation is not found.",typeof(List<string>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError,"DB is not accessible.")]
         public IHttpActionResult EnRu(string word)
         {
             var list = cardTranslator.Translate(word, Common.TranslateDirection.ToRussian);

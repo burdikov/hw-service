@@ -20,12 +20,12 @@ namespace hw_service_try2.Bll
             repo = cardRepository;
         }
 
-        public WordTest CreateWordTest(int id, Lang originLang)
+        public WordTest Create(int id, Lang originLang)
         {
             try
             {
                 Random rnd = new Random(DateTime.Now.Millisecond);
-                
+
                 // get list of existing cards
                 List<int> ids = repo.List().ToList();
 
@@ -54,7 +54,7 @@ namespace hw_service_try2.Bll
 
                 // find our card among all opts 
                 var card = cards.Where(x => x.ID == id).ToList()[0];
-                
+
                 // set up Word property and fill Options
                 switch (originLang)
                 {
@@ -65,8 +65,6 @@ namespace hw_service_try2.Bll
                     case Lang.English:
                         test.Word = card.Eng;
                         test.Options = cards.Select(x => x.Rus).ToList();
-                        break;
-                    default:
                         break;
                 }
 
@@ -83,9 +81,28 @@ namespace hw_service_try2.Bll
             }
         }
 
-        public bool IsWordTestPassed(WordTest test)
+        public void Check(WordTest wordTest)
         {
-            throw new NotImplementedException();
+            if (wordTest == null) throw new ArgumentNullException();
+            if (wordTest.ChosenWord == null) throw new ArgumentException("Chosen word can not be null");
+
+            Card card = repo.Read(wordTest.CardId);
+            if (card == null)
+            {
+                wordTest.Result = WordTest.WordTestResult.NotChecked;
+                return;
+            }
+
+            string s = null;
+            switch (wordTest.OriginLang)
+            {
+                case Lang.English: s = card.Rus; break;
+                case Lang.Russian: s = card.Eng; break;
+            }
+            if (wordTest.ChosenWord == s)
+                wordTest.Result = WordTest.WordTestResult.Correct;
+            else
+                wordTest.Result = WordTest.WordTestResult.Incorrect;
         }
     }
 }

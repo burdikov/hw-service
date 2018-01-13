@@ -15,7 +15,7 @@ namespace hw_service_try2.Dal.Interfaces
         IEnumerable<Card> Read(int[] ids);
         IEnumerable<Card> ReadGroup(int groupId);
         IEnumerable<Card> ReadAll();
-        int Update(int id, Card card);
+        int Update(Card card);
         int Delete(int id);
     }
 }

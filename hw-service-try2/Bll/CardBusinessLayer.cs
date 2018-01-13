@@ -48,16 +48,15 @@ namespace hw_service_try2.Bll
             return repository.Create(rus,eng,groupId);
         }
 
-        public bool Update(int id, Card card)
+        public bool Update(Card card)
         {
             if (card == null) throw new ArgumentNullException("card");
             if (!IsValidWord(card.Rus, Lang.Russian))
                 throw new ArgumentException("Field rus is not a valid russian word.");
             if (!IsValidWord(card.Eng, Lang.English))
                 throw new ArgumentException("Field eng is not a valid english word.");
-            if (id != card.ID) throw new ArgumentException("Id of the card can not be changed.");
 
-            if (repository.Update(id, card) == 1) return true; else return false;
+            if (repository.Update(card) == 1) return true; else return false;
         }
 
         public bool Delete(int id) => repository.Delete(id) == 1 ? true : false;
@@ -65,6 +64,7 @@ namespace hw_service_try2.Bll
         public Card Get(int id) => repository.Read(id);
 
         public IEnumerable<Card> GetGroup(int groupId) => repository.ReadGroup(groupId);
+
         public IEnumerable<Card> GetAll() => repository.ReadAll();
 
         public IEnumerable<int> List() => repository.List();

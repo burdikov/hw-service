@@ -10,7 +10,7 @@ namespace hw_service_try2.Bll.Interfaces
 {
     public interface ICardTester
     {
-        WordTest CreateWordTest(int id, Lang originLang);
-        bool IsWordTestPassed(WordTest test);
+        WordTest Create(int cardId, Lang originLang);
+        void Check(WordTest test);
     }
 }

@@ -11,7 +11,7 @@ namespace hw_service_try2.Bll.Interfaces
     {
         Card Add(string rus, string eng, int? groupId);
         bool Delete(int id);
-        bool Update(int id, Card card);
+        bool Update(Card card);
         Card Get(int id);
         IEnumerable<int> List();
         IEnumerable<Card> Get(int[] ids);
