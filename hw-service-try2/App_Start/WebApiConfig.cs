@@ -7,8 +7,8 @@ using System.Web.Http;
 using System.Web.Http.Dependencies;
 using Autofac;
 using Autofac.Integration.WebApi;
-using hw_service_try2.Bll;
-using hw_service_try2.Bll.Interfaces;
+using hw_service_try2.Bl;
+using hw_service_try2.Bl.Interfaces;
 using hw_service_try2.Dal;
 using hw_service_try2.Dal.Interfaces;
 

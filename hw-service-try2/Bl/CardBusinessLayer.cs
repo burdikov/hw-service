@@ -1,4 +1,4 @@
-﻿using hw_service_try2.Bll.Interfaces;
+﻿using hw_service_try2.Bl.Interfaces;
 using hw_service_try2.Common;
 using hw_service_try2.Dal.Interfaces;
 using hw_service_try2.Models;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace hw_service_try2.Bll
+namespace hw_service_try2.Bl
 {
     public class CardBusinessLayer : ICardBusinessLayer
     {
@@ -32,7 +32,7 @@ namespace hw_service_try2.Bll
                     break;
             }
             
-            if (word == string.Empty || word.Length > 30) return false;
+            if (word == null || word == string.Empty || word.Length > 30) return false;
             if (Regex.Replace(word, pattern, string.Empty) != string.Empty) return false;
 
             return true;

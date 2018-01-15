@@ -1,4 +1,4 @@
-﻿using hw_service_try2.Bll.Interfaces;
+﻿using hw_service_try2.Bl.Interfaces;
 using hw_service_try2.Models;
 using System;
 using System.Collections.Generic;

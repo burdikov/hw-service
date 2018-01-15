@@ -112,12 +112,12 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Bll\CardBusinessLayer.cs" />
-    <Compile Include="Bll\CardTester.cs" />
-    <Compile Include="Bll\GroupBusinessLayer.cs" />
-    <Compile Include="Bll\Interfaces\ICardBusinessLayer.cs" />
-    <Compile Include="Bll\Interfaces\IGroupBusinessLayer.cs" />
-    <Compile Include="Bll\Interfaces\ICardTester.cs" />
+    <Compile Include="Bl\CardBusinessLayer.cs" />
+    <Compile Include="Bl\CardTester.cs" />
+    <Compile Include="Bl\GroupBusinessLayer.cs" />
+    <Compile Include="Bl\Interfaces\ICardBusinessLayer.cs" />
+    <Compile Include="Bl\Interfaces\IGroupBusinessLayer.cs" />
+    <Compile Include="Bl\Interfaces\ICardTester.cs" />
     <Compile Include="Common\TranslateDirection.cs" />
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />

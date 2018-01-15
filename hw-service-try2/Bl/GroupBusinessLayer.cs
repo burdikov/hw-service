@@ -1,4 +1,4 @@
-﻿using hw_service_try2.Bll.Interfaces;
+﻿using hw_service_try2.Bl.Interfaces;
 using hw_service_try2.Dal.Interfaces;
 using hw_service_try2.Models;
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace hw_service_try2.Bll
+namespace hw_service_try2.Bl
 {
     public class GroupBusinessLayer : IGroupBusinessLayer
     {
